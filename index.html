@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SelectoVintage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        h1 {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 998;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+        }
+
+        nav.show {
+            transform: translateX(0);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            /* Asegura que las imágenes no se salgan del contenedor */
+        }
+
+        .carousel-images {
+            display: flex;
+            width: 300%;
+            /* Ajustar según el número de imágenes (3 imágenes = 300%) */
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-buttons button {
+            background: none;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .buttons button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .latest-arrivals {
+            padding: 20px;
+        }
+
+        .latest-arrivals h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .items .item {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+
+        .items .item img {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+        }
+
+        .add-to-cart {
+            justify-content: center;
+            text-align: center;
+            border: 2px solid #000000c1;
+            margin-left: 0%;
+            background-color: #fff;
+            padding: 15px;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .txt-carrete {
+            background-color: #a2969679;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .txt-carrete a {
+            margin: 0 15px;
+        }
+
+        .text-nav {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .items .item {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .carousel-images img {
+                height: 300px;
+            }
+
+            .items .item {
+                width: 48%;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .items .item {
+                width: 23%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <img src="menu-icon.png" alt="Menu">
+        </div>
+        <h1>SelectoVintage</h1>
+    </header>
+    <div class="txt-carrete">
+        <button class="text-nav" onclick="prevText()">❮</button>
+        <a id="text-carousel">Hola mundo</a>
+        <button class="text-nav" onclick="nextText()">❯</button>
+    </div>
+    <nav id="menu" class="hidden">
+        <ul>
+            <li><a href="#">Novedades</a></li>
+            <li><a href="#">Sudaderas</a></li>
+            <li><a href="#">Chaquetas</a></li>
+            <li><a href="#">Pantalones</a></li>
+            <li><a href="#">Jersey</a></li>
+            <li><a href="#">Camisas</a></li>
+            <li><a href="#">Camisetas</a></li>
+            <li><a href="#">Polos</a></li>
+            <li><a href="#">Deporte</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="carousel">
+            <div class="carousel-images">
+                <img src="https://media.discordapp.net/attachments/1235960639973883955/1265402367529193552/image.jpg?ex=66b08a8a&is=66af390a&hm=b88a9dce4ff09dd16e8ddddb2ca12db32a216e0b36ee559e52196bb3cf0c9a7e&=&format=webp&width=1466&height=1100"
+                    alt="Imagen 1">
+                <img src="https://media.discordapp.net/attachments/1235960639973883955/1265402368015601664/image.jpg?ex=66b08a8a&is=66af390a&hm=b685dac9cf02ccb2cf2701db42193cbb4d87538649c36a99e620a5ccab51b539&=&format=webp&width=1466&height=1100"
+                    alt="Imagen 2">
+                <img src="https://media.discordapp.net/attachments/1235960639973883955/1265402367583719424/image.jpg?ex=66b08a8a&is=66af390a&hm=1ce97e2ba30a918678c17a490edbc87db4b4654bd71b8c107cc492ebdd9c2f83&=&format=webp&width=1466&height=1100"
+                    alt="Imagen 3">
+            </div>
+            <div class="carousel-buttons" style="display: none;">
+                <button onclick="prevImage()">❮</button>
+                <button onclick="nextImage()">❯</button>
+            </div>
+        </section>
+        <section class="buttons">
+            <button>Ver Novedades</button>
+            <button>Mistery Box</button>
+            <button>Outlet</button>
+        </section>
+        <section class="latest-arrivals">
+            <h2>Lo Último en Llegar</h2>
+            <div class="items">
+                <div class="item">
+                    <img src="https://www.selectovintage.com/cdn/shop/files/MG_9273copia.jpg?v=1721926857"
+                        alt="Artículo 1">
+                    <div class="item-info">
+                        <p class="item-name">Artículo 1</p>
+                        <p class="item-price">€29.99</p>
+                        <button class="add-to-cart">Añadir al carrito</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="item2.jpg" alt="Artículo 2">
+                    <div class="item-info">
+                        <p class="item-name">Artículo 2</p>
+                        <p class="item-price">€39.99</p>
+                        <button class="add-to-cart">Añadir al carrito</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="item3.jpg" alt="Artículo 3">
+                    <div class="item-info">
+                        <p class="item-name">Artículo 3</p>
+                        <p class="item-price">€49.99</p>
+                        <button class="add-to-cart">Añadir al carrito</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="item4.jpg" alt="Artículo 4">
+                    <div class="item-info">
+                        <p class="item-name">Artículo 4</p>
+                        <p class="item-price">€59.99</p>
+                        <button class="add-to-cart">Añadir al carrito</button>
+                    </div>
+                </div>
+                <!-- Añadir más artículos si es necesario -->
+            </div>
+            <section class="buttons">
+                <button>Ver Mas</button>
+            </section>
+        </section>
+
+    </main>
+
+    <script>
+        let currentImageIndex = 0;
+        let currentTextIndex = 0;
+        const texts = ["Hola mundo", "Bienvenidos a SelectoVintage", "Descubre nuestras ofertas"];
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('show');
+        }
+
+        function showImage(index) {
+            const carouselImages = document.querySelector('.carousel-images');
+            const totalImages = document.querySelectorAll('.carousel-images img').length;
+            currentImageIndex = (index + totalImages) % totalImages;
+            const offset = -currentImageIndex * (100 / totalImages); // Ajusta el cálculo del offset
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+
+        function prevImage() {
+            showImage(currentImageIndex - 1);
+        }
+
+        function nextImage() {
+            showImage(currentImageIndex + 1);
+        }
+
+        function showText(index) {
+            currentTextIndex = (index + texts.length) % texts.length;
+            document.getElementById('text-carousel').textContent = texts[currentTextIndex];
+        }
+
+        function prevText() {
+            showText(currentTextIndex - 1);
+        }
+
+        function nextText() {
+            showText(currentTextIndex + 1);
+        }
+
+        function showImage(index) {
+            const carouselImages = document.querySelector('.carousel-images');
+            const totalImages = document.querySelectorAll('.carousel-images img').length;
+            currentImageIndex = (index + totalImages) % totalImages;
+            const offset = -currentImageIndex * (100 / totalImages); // Ajusta el cálculo del offset
+            carouselImages.style.transform = `translateX(${offset}%)`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showImage(currentImageIndex);
+            showText(currentTextIndex);
+            setInterval(() => {
+                nextImage();
+            }, 3000);
+            setInterval(() => {
+                nextText();
+            }, 6000);
+        });
+
+
+    </script>
+
+</body>
+
+</html>
